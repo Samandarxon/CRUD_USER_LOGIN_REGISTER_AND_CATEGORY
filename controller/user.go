@@ -17,6 +17,7 @@ type UserController struct {
 }
 
 func (u *UserController) Login(req models.LoginRequest) models.LoginRespons {
+	u.ReadAll("JsonDB/users.json")
 	for _, el := range u.Users {
 		fmt.Println("ELEMENT", req.UserName, el.UserName)
 		if el.UserName == req.UserName {
@@ -28,12 +29,13 @@ func (u *UserController) Login(req models.LoginRequest) models.LoginRespons {
 }
 
 func (u *UserController) Register(req models.RegisterRequest) models.RegisterRespons {
+	u.ReadAll("JsonDB/users.json")
 	for _, el := range u.Users {
 		if el.UserName == req.UserName {
 			return models.RegisterRespons{Message: fmt.Sprintf("Bu %s username bazada bor boshqa username kiriting", req.UserName)}
 		}
 	}
-	u.ReadAll("JsonDB/users.json")
+	
 	u.Users = append(u.Users, u.CreateUser(models.UserCreate{
 		Name:        req.Name,
 		SurName:     req.SurName,
