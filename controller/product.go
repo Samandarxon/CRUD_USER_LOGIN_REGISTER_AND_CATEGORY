@@ -72,6 +72,7 @@ func (p *ProductController) ProductGetList(req models.ProductGetListRequest) mod
 }
 
 func (p *ProductController) ProdcutGetById(req models.ProductPrimaryKey) models.Product {
+	p.ReadAll("JsonDB/products.json")
 	for _, v := range p.Products {
 		if v.Id == req.Id {
 			return v
@@ -82,6 +83,7 @@ func (p *ProductController) ProdcutGetById(req models.ProductPrimaryKey) models.
 }
 
 func (p *ProductController) ProductUpdate(req models.ProductUpdate) models.Product {
+	p.ReadAll("JsonDB/products.json")
 	for index, el := range p.Products {
 		if el.Id == req.Id {
 			p.Products[index].Price = req.Price
@@ -95,6 +97,7 @@ func (p *ProductController) ProductUpdate(req models.ProductUpdate) models.Produ
 }
 
 func (p *ProductController) ProductDelete(req models.ProductPrimaryKey) string {
+	p.ReadAll("JsonDB/products.json")
 	for index, el := range p.Products {
 		if el.Id == req.Id {
 			// fmt.Println("del", p.Products[index+1:])
