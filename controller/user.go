@@ -124,6 +124,7 @@ func (u *UserController) CreateUser(req models.UserCreate) models.User {
 /* ***********************************************Create User Method*********************************************** */
 /* ***********************************************User Get List Method*********************************************** */
 func (u *UserController) UserGetList(req models.UserGetListRequest) models.UserGetListRespons {
+	u.ReadAll("JsonDB/users.json")
 	fmt.Println(" ********************************************UserGetList Started******************************************** ")
 	newLimitUsers := []models.User{}
 	if req.Limit == 0 {
@@ -169,6 +170,7 @@ func (u *UserController) UserGetById(req models.UserPrimaryKey) models.User {
 /* ***********************************************User Get By Id Method*********************************************** */
 /* ***********************************************User Update Method*********************************************** */
 func (u *UserController) UserUpdate(req models.UserUpdateRequest) models.User {
+	u.ReadAll("JsonDB/users.json")
 	AgeVsDate := models.DateAndAge{}
 	AgeVsDate.AgeAndDate(faker.Date())
 	for i, el := range u.Users {
@@ -190,7 +192,7 @@ func (u *UserController) UserUpdate(req models.UserUpdateRequest) models.User {
 /* ***********************************************User Update Method*********************************************** */
 /* ***********************************************User Delete Method*********************************************** */
 func (u *UserController) UserDelete(req models.UserPrimaryKey) (string, models.User) {
-
+        u.ReadAll("JsonDB/users.json")
 	for index, el := range u.Users {
 		if el.Id == req.Id {
 			del_user := u.Users[index]
