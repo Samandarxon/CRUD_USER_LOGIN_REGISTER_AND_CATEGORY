@@ -81,6 +81,7 @@ func (c *CategoryController) CreateCategory(req models.CreateCategory) models.Ca
 /* ***********************************************Create Category Method*********************************************** */
 /* ***********************************************Category Get List Method*********************************************** */
 func (c *CategoryController) CategoryGetList(req models.CategoryGetListRequest) models.CategoryGetListRespons {
+	c.ReadAll("JsonDB/category.json")
 	fmt.Println(" ********************************************CategoryGetList Started******************************************** ")
 	newLimitCategorys := []models.Category{}
 	if req.Limit == 0 {
@@ -113,6 +114,7 @@ func (c *CategoryController) CategoryGetList(req models.CategoryGetListRequest) 
 /* ***********************************************Category Get List Method*********************************************** */
 /* ***********************************************Category Get By Id Method*********************************************** */
 func (c *CategoryController) CategoryGetById(req models.CategoryPrimaryKey) models.Category {
+	c.ReadAll("JsonDB/category.json")
 	for _, el := range c.Categorys {
 		if el.Id == req.Id {
 			return el
@@ -124,21 +126,7 @@ func (c *CategoryController) CategoryGetById(req models.CategoryPrimaryKey) mode
 /* ***********************************************Category Get By Id Method*********************************************** */
 /* ***********************************************Category Update Method*********************************************** */
 func (c *CategoryController) CategoryUpdate(req models.CategoryUpdateRequest) models.Category {
-	// path := "JsonDB/category.json"
-
-	resp, err := os.ReadFile("JsonDB/category.json")
-	if err != nil {
-		log.Println(err)
-	}
-
-	err = json.Unmarshal(resp, &c.Categorys)
-	// resp,err := io.ReadAll()
-	if err != nil {
-		log.Println(err)
-	}
-
-	// c.Categorys = append(c.Categorys,)
-
+	c.ReadAll("JsonDB/category.json")
 	for i, el := range c.Categorys {
 		if el.Id == req.Id {
 			c.Categorys[i].Name = req.Name
@@ -155,6 +143,7 @@ func (c *CategoryController) CategoryUpdate(req models.CategoryUpdateRequest) mo
 /* ***********************************************Category Update Method*********************************************** */
 /* ***********************************************Category Delete Method*********************************************** */
 func (c *CategoryController) CategoryDelete(req models.CategoryPrimaryKey) (string, models.Category) {
+	c.ReadAll("JsonDB/category.json")
 	for index, el := range c.Categorys {
 		if el.Id == req.Id {
 			del_Category := c.Categorys[index]
